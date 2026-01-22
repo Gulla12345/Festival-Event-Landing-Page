@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festival Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="hero">
+        <div class="hero-content">
+            <h1>Summer Music Festival</h1>
+            <p>Join us for an unforgettable weekend of music and fun!</p>
+            <p>Date: July 15-17, 2023 | Location: Central Park, NYC</p>
+            <button id="cta-btn">Get Tickets Now</button>
+        </div>
+    </header>
+
+    <section id="details">
+        <h2>Event Details</h2>
+        <div class="countdown">
+            <h3>Countdown to Festival</h3>
+            <div id="timer">Loading...</div>
+        </div>
+        <div class="schedule">
+            <h3>Schedule</h3>
+            <ul>
+                <li><strong>Friday:</strong> Opening acts from 6 PM</li>
+                <li><strong>Saturday:</strong> Main performances from 4 PM</li>
+                <li><strong>Sunday:</strong> Closing ceremony at 8 PM</li>
+            </ul>
+        </div>
+        <div class="lineup">
+            <h3>Lineup Highlights</h3>
+            <p>Featuring artists like DJ Spin, The Groove Band, and more!</p>
+        </div>
+    </section>
+
+    <section id="register">
+        <h2>Register for Updates</h2>
+        <form id="reg-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+        <p id="message"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Summer Music Festival. All rights reserved.</p>
+        <p>Follow us on <a href="#">Social Media</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Hero section */
+#hero {
+    background: url('https://via.placeholder.com/1920x600?text=Festival+Banner') no-repeat center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+#cta-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+#cta-btn:hover {
+    background: #ff5252;
+}
+
+/* Details section */
+#details {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#details h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.countdown, .schedule, .lineup {
+    margin-bottom: 2rem;
+}
+
+#timer {
+    font-size: 2rem;
+    color: #ff6b6b;
+}
+
+/* Register section */
+#register {
+    background: #333;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+#reg-form {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#reg-form input {
+    padding: 0.5rem;
+    width: 250px;
+}
+
+#reg-form button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #hero h1 {
+        font-size: 2rem;
+    }
+    #reg-form {
+        flex-direction: column;
+        align-items: center;
+    }
+    #reg-form input {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+// Countdown timer
+const eventDate = new Date('July 15, 2023 18:00:00').getTime();
+
+function updateTimer() {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+
+    if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('timer').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    } else {
+        document.getElementById('timer').innerHTML = 'Event has started!';
+    }
+}
+
+setInterval(updateTimer, 1000);
+updateTimer(); // Initial call
+
+// Form submission (demo only)
+document.getElementById('reg-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const message = document.getElementById('message');
+    message.textContent = 'Thank you for subscribing!';
+    message.style.color = '#ff6b6b';
+    this.reset();
+});
